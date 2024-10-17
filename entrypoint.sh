@@ -1,22 +1,24 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Waiting for postgres to connect ..."
+# Check if DJANGO_ENV is set
+if [ -z "$DJANGO_ENV" ]; then
+    echo "Error: DJANGO_ENV is not set. Please set it to 'development' or 'production'."
+    exit 1
+fi
 
-while ! nc -z db 5432; do
-  sleep 0.1
-done
-
-echo "PostgreSQL is active"
-
+python manage.py wait_for_db
 python manage.py collectstatic --noinput
-python manage.py migrate
 python manage.py makemigrations
-
-gunicorn truck_signs_designs.wsgi:application --bind 0.0.0.0:8000
-
-
+python manage.py migrate
 
 echo "Postgresql migrations finished"
 
-python manage.py runserver
+if [ "$DJANGO_ENV" = "production" ]; then
+    gunicorn truck_signs_designs.wsgi:application --bind 0.0.0.0:8000
+elif [ "$DJANGO_ENV" = "development" ]; then
+    python manage.py runserver 0.0.0.0:8000
+else
+    echo "Error: Invalid DJANGO_ENV value. Please set it to 'development' or 'production'."
+    exit 1
+fi

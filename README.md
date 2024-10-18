@@ -37,7 +37,7 @@ cp simple_env_config.env .env
 DOCKER_DB_NAME=truck_signs_db        # Postgres Database Name
 DOCKER_DB_USER=truck_signs           # Postgres Database User
 DOCKER_DB_PASSWORD=mysecretpassword  # Postgres Database password
-DOCKER_DB_HOST=truck_signs_network   # Docker Network Name
+DOCKER_DB_HOST=truck_signs_postgres  # Postgres Container Name
 DOCKER_DB_PORT=5432                  # Postgres Database Port
 DOCKER_SECRET_KEY=mysecretkey        # Django Secret Key
 ```

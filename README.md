@@ -99,13 +99,13 @@ docker volume create truck_signs_media
 ```
 
 ```bash
-docker run -d `                       # Start container in background
-    --restart on-failure `            # Restart container if exists with an error.
-    --name truck_signs_api `          # Names the container
-    -p 8020:8000 `                    # Bind mount host to container
-    -v truck_signs_media:/app/media   # Bind mount application media to created volume
-    --network truck_signs_network `   # Same as created docker network
-    truck_signs_api                   # Docker application image
+docker run -d `                        # Start container in background
+    --restart on-failure `             # Restart container if exists with an error.
+    --name truck_signs_api `           # Names the container
+    -p 8020:8000 `                     # Bind mount host to container
+    -v truck_signs_media:/app/media `  # Bind mount application media to created volume
+    --network truck_signs_network `    # Same as created docker network
+    truck_signs_api                    # Docker application image
 ```
 
 > [!Note] The App should be running on `http://<your_ip_address>:8020`

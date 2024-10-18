@@ -88,20 +88,49 @@ docker run `
     truck_signs_api                   # Docker application image
 ```
 
-> [!Note] The App should be running in [localhost:8000](http://localhost:8000)
+> [!Note] The App should be running on [localhost:8000](http://localhost:8000)
 
 ### Start application in production
+
+Create docker volume for application media files.
+
+```bash
+docker volume create truck_signs_media
+```
 
 ```bash
 docker run -d `                       # Start container in background
     --restart on-failure `            # Restart container if exists with an error.
     --name truck_signs_api `          # Names the container
-    --network truck_signs_network `   # Same as created docker network
     -p 8020:8000 `                    # Bind mount host to container
+    -v truck_signs_media:/app/media   # Bind mount application media to created volume
+    --network truck_signs_network `   # Same as created docker network
     truck_signs_api                   # Docker application image
 ```
 
-> [!Note] The App should be running in `http://<your_ip_address>:8020`
+> [!Note] The App should be running on `http://<your_ip_address>:8020`
+
+### Create an admin user for Django
+
+Start Django `createsuperuser` command:
+
+```bash
+docker exec -it `  # Start interactive shell
+    truck_signs_api `  # Container name
+    python /app/manage.py createsuperuser # Django command to start creating an admin user
+```
+
+Follow the prompts to create an admin user.
+
+```bash
+Username: <admin_username>
+Email address: <admin_email>
+Password: <admin_password>
+Password (again): <admin_password>
+Superuser created successfully.
+```
+
+After creating admin user, open your application in your Browser and navigate to `/admin`, were you can login to Admin panel using the provided username and password.
 
 ## Description
 

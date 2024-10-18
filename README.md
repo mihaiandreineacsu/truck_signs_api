@@ -27,7 +27,7 @@ git clone https://github.com/mihaiandreineacsu/truck_signs_api.git
 ### Create environment file
 
 ```bash
-cd app/truck_signs_api/truck_signs_designs/settings
+cd truck_signs_api/app/truck_signs_designs/settings
 cp simple_env_config.env .env
 ```
 
@@ -55,7 +55,6 @@ docker pull postgres
 ### Start postgres container
 
 ```bash
-
 docker run -d `                                     # Run container in background
     --restart on-failure `                          # Restart container if exists with an error.
     --network truck_signs_network `                 # Same as created docker network
@@ -72,7 +71,7 @@ docker run -d `                                     # Run container in backgroun
 ### Build application
 
 ```bash
-cd ../..
+cd ../../..
 docker build -t truck_signs_api .
 ```
 
@@ -82,11 +81,13 @@ docker build -t truck_signs_api .
 docker run `
     -it --rm `                        # Start container in foreground and removes it on stop
     --name truck_signs_api `          # Names the container
-    -e DJANGO_ENV=development `       # Starts Django development server.
+    -p 8000:8000 `                    # Bind mount host to container
     -v ${PWD}/app:/app `              # Bind mount host to container when in development
     --network truck_signs_network `   # Same as created docker network
     truck_signs_api                   # Docker application image
 ```
+
+> [!Note] The App should be running in [localhost:8000](http://localhost:8000)
 
 ### Start application in production
 
@@ -95,9 +96,11 @@ docker run -d `                       # Start container in background
     --restart on-failure `            # Restart container if exists with an error.
     --name truck_signs_api `          # Names the container
     --network truck_signs_network `   # Same as created docker network
-    -e DJANGO_ENV=production `        # Starts WSGI Server
+    -p 8020:8000 `                    # Bind mount host to container
     truck_signs_api                   # Docker application image
 ```
+
+> [!Note] The App should be running in `http://<your_ip_address>:8020`
 
 ## Description
 

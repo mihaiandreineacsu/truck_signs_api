@@ -20,6 +20,4 @@ RUN apt-get update && apt-get install -y \
 
 EXPOSE 8000
 
-ENV DJANGO_ENV=production
-
 ENTRYPOINT ["./entrypoint.sh"]

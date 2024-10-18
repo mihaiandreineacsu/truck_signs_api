@@ -40,6 +40,7 @@ DOCKER_DB_PASSWORD=mysecretpassword  # Postgres Database password
 DOCKER_DB_HOST=truck_signs_postgres  # Postgres Container Name
 DOCKER_DB_PORT=5432                  # Postgres Database Port
 DOCKER_SECRET_KEY=mysecretkey        # Django Secret Key
+DJANGO_HOST=your_ip_address          # Production Address
 ```
 
 ### Pull Postgres and create network and volume
